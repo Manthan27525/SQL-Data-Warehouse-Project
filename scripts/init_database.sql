@@ -1,41 +1,37 @@
-/*
-===============================================================================
-Script:      init_database.sql
-Purpose:     Initialise the environment for the SQL Data Warehouse project.
-             Creates the 'DataWarehouse' database and the three schemas used
-             by the medallion architecture:
+CREATE TABLE bronze.crm_cust_info(
+cst_id INT,
+cst_key NVARCHAR(50),
+cst_firstname NVARCHAR(50),
+cst_lastname NVARCHAR(50),
+cst_marital_status NVARCHAR(50),
+cst_gender NVARCHAR(10),
+cst_create_date DATE
+);
 
-               bronze - raw data, ingested as-is from the source systems
-               silver - cleansed and standardised data
-               gold   - business-ready data modelled for analytics/reporting
+CREATE TABLE bronze.crm_prd_info(
+prd_id INT,
+prd_key NVARCHAR(50),
+prd_name NVARCHAR(50),
+prd_cost INT,
+prd_line NVARCHAR(10),
+prd_start_dt DATE,
+prd_end_dt DATE
+);
 
-Target:      Microsoft SQL Server (T-SQL)
-Run as:      A login with permission to create databases (e.g. sysadmin).
-Usage:       Run once, before any of the bronze/silver/gold object scripts.
+CREATE TABLE bronze.crm_sales_details(
+sls_ord_num NVARCHAR(50),
+sls_prd_key NVARCHAR(50),
+sls_cust_id NVARCHAR(50),
+sls_order_dt DATE,
+sls_due_dt DATE,
+sls_sales INT,
+sls_quantity INT,
+sls_price INT
+);
 
-Note:        This script does not drop or overwrite an existing database.
-             Re-running it after the database exists will fail on the
-             CREATE statements.
-===============================================================================
-*/
+CREATE TABLE bronze.erp_cust_az12(
+cid INT,
+bdate DATE,
+gender VARCHAR(10)
+);
 
--- Switch to the master database; databases are created from here.
-USE master;
-
--- Create the data warehouse database.
-CREATE DataWarehouse;
-
--- Switch into the new database so the schemas below are created inside it.
-USE DataWarehouse;
-
--- Bronze layer: raw, unprocessed data loaded directly from the sources.
-CREATE SCHEMA bronze;
-GO
-
--- Silver layer: cleaned, deduplicated and standardised data.
-CREATE SCHEMA silver;
-GO
-
--- Gold layer: business-ready views/tables (e.g. star schema) for reporting.
-CREATE SCHEMA gold;
-GO
