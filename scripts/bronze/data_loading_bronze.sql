@@ -50,7 +50,7 @@ BEGIN
         IF OBJECT_ID ('bronze.crm_cust_info','U') IS NOT NULL
         TRUNCATE TABLE bronze.crm_cust_info;
         BULK INSERT bronze.crm_cust_info
-        FROM 'D:\Project\SQL-Data-Warehouse-Project\datasets\source_crm\cust_info.csv'
+        FROM 'SQL-Data-Warehouse-Project\datasets\source_crm\cust_info.csv'
         WITH (
             FIRSTROW=2,             -- Skip the header row; data starts on row 2
             FIELDTERMINATOR = ',',  -- Columns in the CSV are comma separated
@@ -68,7 +68,7 @@ BEGIN
         IF OBJECT_ID ('bronze.crm_prd_info','U') IS NOT NULL
         TRUNCATE TABLE bronze.crm_prd_info;
         BULK INSERT bronze.crm_prd_info
-        FROM 'D:\Project\SQL-Data-Warehouse-Project\datasets\source_crm\prd_info.csv'
+        FROM 'SQL-Data-Warehouse-Project\datasets\source_crm\prd_info.csv'
         WITH (
             FIRSTROW=2,
             FIELDTERMINATOR = ',',
@@ -86,7 +86,7 @@ BEGIN
         IF OBJECT_ID ('bronze.crm_sales_details','U') IS NOT NULL
         TRUNCATE TABLE bronze.crm_sales_details;
         BULK INSERT bronze.crm_sales_details
-        FROM 'D:\Project\SQL-Data-Warehouse-Project\datasets\source_crm\sales_details.csv'
+        FROM 'SQL-Data-Warehouse-Project\datasets\source_crm\sales_details.csv'
         WITH (
             FIRSTROW=2,
             FIELDTERMINATOR = ',',
@@ -108,7 +108,7 @@ BEGIN
         IF OBJECT_ID ('bronze.erp_cust_az12','U') IS NOT NULL
         TRUNCATE TABLE bronze.erp_cust_az12;
         BULK INSERT bronze.erp_cust_az12
-        FROM 'D:\Project\SQL-Data-Warehouse-Project\datasets\source_erp\cust_az12.csv'
+        FROM 'SQL-Data-Warehouse-Project\datasets\source_erp\CUST_AZ12.csv'
         WITH (
             FIRSTROW=2,
             FIELDTERMINATOR = ',',
@@ -126,7 +126,7 @@ BEGIN
         IF OBJECT_ID ('bronze.erp_loc_a101','U') IS NOT NULL
         TRUNCATE TABLE bronze.erp_loc_a101;
         BULK INSERT bronze.erp_loc_a101
-        FROM 'D:\Project\SQL-Data-Warehouse-Project\datasets\source_erp\loc_a101.csv'
+        FROM 'SQL-Data-Warehouse-Project\datasets\source_erp\LOC_A101.csv'
         WITH (
             FIRSTROW=2,
             FIELDTERMINATOR = ',',
@@ -144,7 +144,7 @@ BEGIN
         IF OBJECT_ID ('bronze.erp_px_cat_g1v2','U') IS NOT NULL
         TRUNCATE TABLE bronze.erp_px_cat_g1v2;
         BULK INSERT bronze.erp_px_cat_g1v2
-        FROM 'D:\Project\SQL-Data-Warehouse-Project\datasets\source_erp\px_cat_g1v2.csv'
+        FROM 'SQL-Data-Warehouse-Project\datasets\source_erp\PX_CAT_G1V2.csv'
         WITH (
             FIRSTROW=2,
             FIELDTERMINATOR = ',',
@@ -161,7 +161,7 @@ BEGIN
     END TRY
     -- Error handling: if any load above fails, report the error details
     -- instead of letting the procedure stop with an unhandled error
-    BEGIN CATCH;
+    BEGIN CATCH
         PRINT '-----------------------------------------';
         PRINT 'Error Occured During Loading Bronze Layer';
         PRINT 'Error Message ' + ERROR_MESSAGE();
@@ -177,8 +177,7 @@ BEGIN
     PRINT 'Data Load Duration  ' + CAST (DATEDIFF(second,@batch_start_time,@batch_end_time) AS NVARCHAR) + ' seconds';
     PRINT '-----------------------------------------------------';
 END;
-
-
+GO
 
 -- Run the procedure to load all bronze tables
-EXEC bronze.load_bronze
+EXEC bronze.load_bronze;
